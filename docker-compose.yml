@@ -1,0 +1,25 @@
+services:
+  server:
+    build:
+      context: ./apps/server
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - ./apps/server/.env
+    environment:
+      - PORT=3001
+      - WEB_ORIGIN=http://localhost:3000
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+    depends_on:
+      - server

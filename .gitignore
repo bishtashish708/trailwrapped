@@ -1,10 +1,12 @@
 node_modules/
 dist/
 build/
+.next/
 .env
 .env.local
 *.db
 *.sqlite
+data/
 .DS_Store
 .vscode/
 .idea/
