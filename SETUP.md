@@ -3,7 +3,7 @@
 ## Option 1: Docker (recommended)
 
 ```bash
-git clone https://github.com/<your-username>/trailwrapped.git
+git clone https://github.com/bishtashish708/trailwrapped.git
 cd trailwrapped
 docker compose up
 ```
@@ -15,7 +15,7 @@ Open `http://localhost:3000`.
 Requires Node 20+.
 
 ```bash
-git clone https://github.com/<your-username>/trailwrapped.git
+git clone https://github.com/bishtashish708/trailwrapped.git
 cd trailwrapped
 
 # server

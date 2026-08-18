@@ -23,7 +23,7 @@ This is a free, open-source, self-hosted alternative. You own your data, you run
 ## Quickstart
 
 ```bash
-git clone https://github.com/<your-username>/trailwrapped.git
+git clone https://github.com/bishtashish708/trailwrapped.git
 cd trailwrapped
 docker compose up
 ```
