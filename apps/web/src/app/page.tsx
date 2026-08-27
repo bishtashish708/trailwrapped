@@ -12,12 +12,20 @@ export default function Home() {
   const [stats, setStats] = useState<RecapStats | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [stravaAthleteId, setStravaAthleteId] = useState<string | null>(null);
+
+  // restore a previously connected Strava athlete from this browser
+  useEffect(() => {
+    setStravaAthleteId(localStorage.getItem("stravaAthleteId"));
+  }, []);
 
   // pick up ?strava_connected=1&athlete_id=X from Strava OAuth callback
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const athleteId = params.get("athlete_id");
     if (params.get("strava_connected") && athleteId) {
+      localStorage.setItem("stravaAthleteId", athleteId);
+      setStravaAthleteId(athleteId);
       importStrava(Number(athleteId), year)
         .then(() => loadRecap())
         .catch((e) => setError(String(e)));
@@ -68,13 +76,33 @@ export default function Home() {
         <section className="space-y-4">
           <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Connect a data source</h2>
 
-          <a
-            href={stravaConnectUrl()}
-            className="flex items-center gap-3 w-full bg-[#FC4C02] hover:bg-[#e04400] transition-colors rounded-xl px-5 py-4 font-semibold"
-          >
-            <StravaIcon />
-            Connect with Strava
-          </a>
+          {stravaAthleteId ? (
+            <div className="flex items-center justify-between gap-3 w-full bg-white/5 border border-trail-lime/30 rounded-xl px-5 py-4">
+              <span className="flex items-center gap-3 text-trail-lime font-semibold">
+                <StravaIcon />
+                Connected to Strava
+              </span>
+              <button
+                onClick={() => {
+                  setError(null);
+                  importStrava(Number(stravaAthleteId), year)
+                    .then(() => loadRecap())
+                    .catch((e) => setError(String(e)));
+                }}
+                className="text-sm text-gray-300 hover:text-white underline underline-offset-2"
+              >
+                Sync now
+              </button>
+            </div>
+          ) : (
+            <a
+              href={stravaConnectUrl()}
+              className="flex items-center gap-3 w-full bg-[#FC4C02] hover:bg-[#e04400] transition-colors rounded-xl px-5 py-4 font-semibold"
+            >
+              <StravaIcon />
+              Connect with Strava
+            </a>
+          )}
 
           <div className="text-center text-sm text-gray-500">or</div>
 

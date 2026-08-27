@@ -10,7 +10,11 @@ const router = Router();
 const REDIRECT_URI = process.env.STRAVA_REDIRECT_URI ?? "http://localhost:3001/strava/callback";
 
 router.get("/connect", (_req: Request, res: Response) => {
-  res.redirect(getAuthUrl(REDIRECT_URI));
+  try {
+    res.redirect(getAuthUrl(REDIRECT_URI));
+  } catch (err) {
+    res.status(500).json({ error: err instanceof Error ? err.message : String(err) });
+  }
 });
 
 router.get("/callback", async (req: Request, res: Response) => {

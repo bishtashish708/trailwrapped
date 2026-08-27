@@ -30,6 +30,14 @@ db.exec(`
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
 
+  -- Strava (and any future source with a stable remote id) must not be
+  -- re-imported as duplicate rows on every reconnect/resync. Uploaded
+  -- GPX/TCX/FIT files have no source_id and are intentionally excluded,
+  -- since SQLite treats each NULL as distinct in a unique index.
+  CREATE UNIQUE INDEX IF NOT EXISTS idx_activities_source
+    ON activities(source_type, source_id)
+    WHERE source_id IS NOT NULL;
+
   CREATE TABLE IF NOT EXISTS strava_tokens (
     athlete_id INTEGER PRIMARY KEY,
     access_token TEXT NOT NULL,

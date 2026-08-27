@@ -1,12 +1,12 @@
 services:
   server:
     build:
-      context: ./apps/server
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/server/Dockerfile
     ports:
       - "3001:3001"
     volumes:
-      - ./data:/app/data
+      - ./data:/app/apps/server/data
     env_file:
       - ./apps/server/.env
     environment:
@@ -15,8 +15,8 @@ services:
 
   web:
     build:
-      context: ./apps/web
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/web/Dockerfile
     ports:
       - "3000:3000"
     environment:

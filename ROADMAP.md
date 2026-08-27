@@ -2,18 +2,19 @@
 
 Rough plan, order isn't fixed.
 
-## v0.1 — core recap
-- [ ] GPX/TCX/FIT file parser and normalization into a common activity schema
-- [ ] Strava OAuth flow and activity import
-- [ ] Local SQLite storage
-- [ ] Core stats: total distance, elevation gain, longest activity, fastest pace, longest streak
-- [ ] First version of the shareable card renderer (PNG export)
+## v0.1 — core recap (shipped)
+- [x] GPX/TCX/FIT file parser and normalization into a common activity schema
+- [x] Strava OAuth flow and activity import
+- [x] Local SQLite storage
+- [x] Core stats: total distance, elevation gain, longest activity, fastest pace, longest streak
+- [x] First version of the shareable card renderer (PNG export)
 
 ## v0.2 — polish
+- [x] Docker one-command setup — shipped early, in v0.1
+- [x] Best month stat — shipped early, in v0.1
 - [ ] Video/GIF export
-- [ ] More stat variety (best month, most consistent week, elevation in relatable comparisons)
+- [ ] More stat variety (most consistent week, elevation in relatable comparisons beyond Everest)
 - [ ] Better error handling for messy/incomplete GPX files
-- [ ] Docker one-command setup
 
 ## v0.3 — plugins
 - [ ] Define a stable `RecapModule` interface

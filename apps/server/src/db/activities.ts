@@ -1,7 +1,8 @@
 import { db } from "./schema";
 import type { Activity, StoredActivity } from "../types/activity";
 
-export function insertActivity(activity: Activity): void {
+/** Returns true if a new row was inserted, false if it was skipped as a duplicate. */
+export function insertActivity(activity: Activity): boolean {
   const stmt = db.prepare(`
     INSERT OR IGNORE INTO activities
       (id, name, sport, start_time, end_time, duration_seconds,
@@ -13,7 +14,7 @@ export function insertActivity(activity: Activity): void {
        @avgPaceSecondsPerKm, @maxPaceSecondsPerKm, @sourceType, @sourceId)
   `);
 
-  stmt.run({
+  const info = stmt.run({
     id: activity.id,
     name: activity.name,
     sport: activity.sport,
@@ -28,6 +29,8 @@ export function insertActivity(activity: Activity): void {
     sourceType: activity.sourceType,
     sourceId: activity.sourceId,
   });
+
+  return info.changes > 0;
 }
 
 export function getActivitiesForYear(year: number): StoredActivity[] {

@@ -167,7 +167,7 @@ export async function importActivities(
       const avgPace =
         a.average_speed > 0 ? 1000 / a.average_speed : null;
 
-      insertActivity({
+      const wasInserted = insertActivity({
         id: uuidv4(),
         name: a.name,
         sport: a.type.toLowerCase(),
@@ -183,7 +183,7 @@ export async function importActivities(
         sourceType: "strava",
         sourceId: String(a.id),
       });
-      imported++;
+      if (wasInserted) imported++;
     }
 
     page++;
